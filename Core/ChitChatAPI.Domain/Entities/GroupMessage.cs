@@ -19,5 +19,7 @@ namespace ChitChatAPI.Domain.Entities
         public Group Group { get; set; }
         [JsonIgnore]
         public User Sender { get; set; }
+        [JsonIgnore]
+        public ICollection<User> ReadedUsers { get; set; }
     }
 }

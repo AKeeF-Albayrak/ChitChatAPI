@@ -12,12 +12,13 @@ namespace ChitChatAPI.Domain.Entities
     {
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; }
-        public int CreatedBy { get; set; }
+        public Guid CreatedById { get; set; }
 
-        // Navigation Properties
         [JsonIgnore]
         public ICollection<GroupUser> GroupUsers { get; set; }
         [JsonIgnore]
         public ICollection<GroupMessage> GroupMessages { get; set; }
+        [JsonIgnore]
+        public User CreatedBy { get; set; }
     }
 }

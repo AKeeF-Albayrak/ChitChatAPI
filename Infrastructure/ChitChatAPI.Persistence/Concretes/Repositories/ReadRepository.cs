@@ -19,5 +19,6 @@ namespace ChitChatAPI.Persistence.Concretes.Repositories
         }
 
         public DbSet<T> Table => _context.Set<T>();
+
     }
 }

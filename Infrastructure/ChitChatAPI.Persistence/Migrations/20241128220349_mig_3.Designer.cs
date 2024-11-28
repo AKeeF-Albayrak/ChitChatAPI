@@ -4,6 +4,7 @@ using ChitChatAPI.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChitChatAPI.Persistence.Migrations
 {
     [DbContext(typeof(ChitChatDbContext))]
-    partial class ChitChatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241128220349_mig_3")]
+    partial class mig_3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,16 +34,14 @@ namespace ChitChatAPI.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
 
                     b.ToTable("Groups");
                 });
@@ -68,30 +69,40 @@ namespace ChitChatAPI.Persistence.Migrations
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UserId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
 
                     b.HasIndex("SenderId");
 
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
+
                     b.ToTable("GroupMessages");
                 });
 
             modelBuilder.Entity("ChitChatAPI.Domain.Entities.GroupUser", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("Id");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.HasKey("GroupId", "UserId");
+                    b.HasIndex("GroupId");
 
                     b.HasIndex("UserId");
 
@@ -129,33 +140,6 @@ namespace ChitChatAPI.Persistence.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("ChitChatAPI.Domain.Entities.RefreshToken", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("ExpiryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("IpAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RefreshTokens");
-                });
-
             modelBuilder.Entity("ChitChatAPI.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -176,54 +160,17 @@ namespace ChitChatAPI.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<bool>("PasswordResetAuthorized")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("PasswordResetAuthorizedExpiration")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("VerificationCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("VerificationCodeExpiration")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("GroupMessageUser", b =>
-                {
-                    b.Property<Guid>("ReadedUsersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ReceivedMessagesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ReadedUsersId", "ReceivedMessagesId");
-
-                    b.HasIndex("ReceivedMessagesId");
-
-                    b.ToTable("MessageReads", (string)null);
-                });
-
-            modelBuilder.Entity("ChitChatAPI.Domain.Entities.Group", b =>
-                {
-                    b.HasOne("ChitChatAPI.Domain.Entities.User", "CreatedBy")
-                        .WithMany("CreatedGroups")
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("ChitChatAPI.Domain.Entities.GroupMessage", b =>
@@ -235,10 +182,18 @@ namespace ChitChatAPI.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("ChitChatAPI.Domain.Entities.User", "Sender")
-                        .WithMany("SentMessages")
+                        .WithMany()
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ChitChatAPI.Domain.Entities.User", null)
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("ChitChatAPI.Domain.Entities.User", null)
+                        .WithMany("SentMessages")
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Group");
 
@@ -268,8 +223,7 @@ namespace ChitChatAPI.Persistence.Migrations
                 {
                     b.HasOne("ChitChatAPI.Domain.Entities.GroupMessage", "GroupMessage")
                         .WithMany()
-                        .HasForeignKey("GroupMessageId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("GroupMessageId");
 
                     b.HasOne("ChitChatAPI.Domain.Entities.User", "User")
                         .WithMany()
@@ -282,32 +236,6 @@ namespace ChitChatAPI.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ChitChatAPI.Domain.Entities.RefreshToken", b =>
-                {
-                    b.HasOne("ChitChatAPI.Domain.Entities.User", "User")
-                        .WithMany("RefreshTokens")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("GroupMessageUser", b =>
-                {
-                    b.HasOne("ChitChatAPI.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("ReadedUsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ChitChatAPI.Domain.Entities.GroupMessage", null)
-                        .WithMany()
-                        .HasForeignKey("ReceivedMessagesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ChitChatAPI.Domain.Entities.Group", b =>
                 {
                     b.Navigation("GroupMessages");
@@ -317,11 +245,9 @@ namespace ChitChatAPI.Persistence.Migrations
 
             modelBuilder.Entity("ChitChatAPI.Domain.Entities.User", b =>
                 {
-                    b.Navigation("CreatedGroups");
-
                     b.Navigation("GroupUsers");
 
-                    b.Navigation("RefreshTokens");
+                    b.Navigation("ReceivedMessages");
 
                     b.Navigation("SentMessages");
                 });

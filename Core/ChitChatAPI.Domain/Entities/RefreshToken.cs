@@ -1,5 +1,4 @@
 ﻿using ChitChatAPI.Domain.Entities.Common;
-using ChitChatAPI.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace ChitChatAPI.Domain.Entities
 {
-    public class GroupUser : BaseEntity
+    public class RefreshToken : BaseEntity
     {
-        public Guid GroupId { get; set; }
+        public string Token { get; set; }
+        public DateTime ExpiryDate { get; set; }
         public Guid UserId { get; set; }
-        public Role Role { get; set; }
+        //public string DeviceInfo { get; set; }
+        public string IpAddress { get; set; }
         [JsonIgnore]
-        public Group Group { get; set; }
-        [JsonIgnore]
-        public User User { get; set; }
+        public User User { get; set; }  
     }
 }
