@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{B956A4AA-C725-40E3-9299-6E33D49AA70E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{52A995F3-5478-47C8-970F-C0C2EB246256}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{865BB31B-30F9-4A26-A4EC-EB863D4A8F39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChitChatAPI.Domain", "Core\ChitChatAPI.Domain\ChitChatAPI.Domain.csproj", "{27D3544E-3E23-4829-88B2-9743F773E630}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChitChatAPI.Aplication", "Core\ChitChatAPI.Aplication\ChitChatAPI.Aplication.csproj", "{00AFBE1A-50BB-4E49-8232-CB54DAB65EE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChitChatAPI.Persistence", "Infrastructure\ChitChatAPI.Persistence\ChitChatAPI.Persistence.csproj", "{B07748C8-9497-4814-A40E-87796BB5B8F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChitChatAPI.Infrastructure", "Infrastructure\ChitChatAPI.Infrastructure\ChitChatAPI.Infrastructure.csproj", "{7E7BBA76-FBCC-40C8-8C02-4F9E3D6E56A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChitChatAPI.API", "Presentation\ChitChatAPI.API\ChitChatAPI.API.csproj", "{78618119-D574-4D33-B049-60F5C83C7E34}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27D3544E-3E23-4829-88B2-9743F773E630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27D3544E-3E23-4829-88B2-9743F773E630}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27D3544E-3E23-4829-88B2-9743F773E630}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27D3544E-3E23-4829-88B2-9743F773E630}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00AFBE1A-50BB-4E49-8232-CB54DAB65EE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00AFBE1A-50BB-4E49-8232-CB54DAB65EE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00AFBE1A-50BB-4E49-8232-CB54DAB65EE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00AFBE1A-50BB-4E49-8232-CB54DAB65EE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B07748C8-9497-4814-A40E-87796BB5B8F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B07748C8-9497-4814-A40E-87796BB5B8F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B07748C8-9497-4814-A40E-87796BB5B8F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B07748C8-9497-4814-A40E-87796BB5B8F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E7BBA76-FBCC-40C8-8C02-4F9E3D6E56A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E7BBA76-FBCC-40C8-8C02-4F9E3D6E56A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E7BBA76-FBCC-40C8-8C02-4F9E3D6E56A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E7BBA76-FBCC-40C8-8C02-4F9E3D6E56A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78618119-D574-4D33-B049-60F5C83C7E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78618119-D574-4D33-B049-60F5C83C7E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78618119-D574-4D33-B049-60F5C83C7E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78618119-D574-4D33-B049-60F5C83C7E34}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{27D3544E-3E23-4829-88B2-9743F773E630} = {B956A4AA-C725-40E3-9299-6E33D49AA70E}
+		{00AFBE1A-50BB-4E49-8232-CB54DAB65EE8} = {B956A4AA-C725-40E3-9299-6E33D49AA70E}
+		{B07748C8-9497-4814-A40E-87796BB5B8F1} = {52A995F3-5478-47C8-970F-C0C2EB246256}
+		{7E7BBA76-FBCC-40C8-8C02-4F9E3D6E56A4} = {52A995F3-5478-47C8-970F-C0C2EB246256}
+		{78618119-D574-4D33-B049-60F5C83C7E34} = {865BB31B-30F9-4A26-A4EC-EB863D4A8F39}
+	EndGlobalSection
+EndGlobal
