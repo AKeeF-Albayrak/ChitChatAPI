@@ -36,6 +36,12 @@ public static class ServiceRegistration
         services.AddScoped<IGroupMessageReadRepository, GroupMessageReadRepository>();
         services.AddScoped<IGroupMessageWriteRepository , GroupMessageWriteRepository>();
 
+        services.AddScoped<IGroupReadRepository, GroupReadRepository>();
+        services.AddScoped<IGroupWriteRepository , GroupWriteRepository>();
+
+        services.AddScoped<IGroupUserReadRepository, GroupUserReadRepository>();
+        services.AddScoped<IGroupUserWriteRepository , GroupUserWriteRepository>();
+
         services.AddScoped<ITokenService, TokenService>();
     }
 }

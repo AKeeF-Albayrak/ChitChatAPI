@@ -9,5 +9,6 @@ namespace ChitChatAPI.Aplication.Abstractions.Repositories
 {
     public interface IGroupUserReadRepository : IReadRepository<GroupUser>
     {
+        public Task<bool> CheckGroupUserByUserId(Guid userId, Guid groupId);
     }
 }

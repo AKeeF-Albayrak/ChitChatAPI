@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChitChatAPI.Aplication.Features.Query.GroupMessage.GetGroupMessages
+namespace ChitChatAPI.Aplication.Features.Command.Group.CreateGroup
 {
-    public class GetGroupMessagesQueryResponse
+    public class CreateGroupCommandResponse
     {
         public Response Response { get; set; }
-        public ICollection<Domain.Entities.GroupMessage> Messages { get; set; }
     }
 }

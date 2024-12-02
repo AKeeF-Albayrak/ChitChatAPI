@@ -5,15 +5,13 @@ namespace ChitChatAPI.API.Middlewares
     public class TokenMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ITokenService _tokenService;
 
-        public TokenMiddleware(RequestDelegate next, ITokenService tokenService)
+        public TokenMiddleware(RequestDelegate next)
         {
             _next = next;
-            _tokenService = tokenService;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, ITokenService tokenService)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault();
 
@@ -24,7 +22,7 @@ namespace ChitChatAPI.API.Middlewares
                     token = token.Substring("Bearer ".Length).Trim();
                 }
 
-                var _token = await _tokenService.ValidateToken(token);
+                var _token = await tokenService.ValidateToken(token);
 
                 if (!_token.IsValid)
                 {

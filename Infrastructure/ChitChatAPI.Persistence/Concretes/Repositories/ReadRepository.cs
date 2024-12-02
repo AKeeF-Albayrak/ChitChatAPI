@@ -20,5 +20,8 @@ namespace ChitChatAPI.Persistence.Concretes.Repositories
 
         public DbSet<T> Table => _context.Set<T>();
 
+        public async Task<T> GetEntityByIdAsync(Guid id) => await Table.FirstAsync(x => x.Id == id);
+
+        public async Task<bool> HasEntityByIdAsync(Guid id) => await Table.FirstAsync(x => x.Id == id) != null;
     }
 }

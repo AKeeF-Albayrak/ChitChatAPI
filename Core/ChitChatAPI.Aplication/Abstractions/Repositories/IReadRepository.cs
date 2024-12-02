@@ -9,5 +9,7 @@ namespace ChitChatAPI.Aplication.Abstractions.Repositories
 {
     public interface IReadRepository<T> : IRepository<T> where T : BaseEntity
     {
+        public Task<T> GetEntityByIdAsync(Guid id);
+        public Task<bool> HasEntityByIdAsync(Guid id);
     }
 }

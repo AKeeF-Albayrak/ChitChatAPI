@@ -1,5 +1,5 @@
 ﻿using ChitChatAPI.API.Utilities;
-using ChitChatAPI.Aplication.Features.Query.GroupMessage.GetGroupMessages;
+using ChitChatAPI.Aplication.Features.Command.Group.CreateGroup;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -9,19 +9,19 @@ namespace ChitChatAPI.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class GroupMessageController : ControllerBase
+    public class GroupController : ControllerBase
     {
         private IMediator _mediator;
-        public GroupMessageController(IMediator mediator)
+        public GroupController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize]
-        public async Task<IActionResult> GetMessages([FromQuery] GetGroupMessagesQueryRequest getGroupMessagesQueryRequest)
+        public async Task<IActionResult> CreateGroup([FromForm]CreateGroupCommandRequest createGroupCommandRequest)
         {
-            GetGroupMessagesQueryResponse response = await _mediator.Send(getGroupMessagesQueryRequest);
+            CreateGroupCommandResponse response = await _mediator.Send(createGroupCommandRequest);
             return ResponseHandler.CreateResponse(response);
         }
     }

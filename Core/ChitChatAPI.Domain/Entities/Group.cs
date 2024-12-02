@@ -11,6 +11,8 @@ namespace ChitChatAPI.Domain.Entities
     public class Group : BaseEntity
     {
         public string Name { get; set; }
+        public byte[] Image { get; set; }
+        public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public Guid CreatedById { get; set; }
 
