@@ -4,9 +4,21 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>30f47e2d-24ec-4bbf-90e5-6687ce96d77f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\BaseProfile.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\BaseProfile.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>

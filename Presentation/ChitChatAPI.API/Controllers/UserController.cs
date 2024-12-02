@@ -1,5 +1,7 @@
-﻿using ChitChatAPI.Aplication.Abstractions.Repositories;
-using ChitChatAPI.Domain.Entities;
+﻿using Azure.Core;
+using ChitChatAPI.API.Utilities;
+using ChitChatAPI.Aplication.Features.Command.User.AddUser;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,18 +11,12 @@ namespace ChitChatAPI.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserWriteRepository _userWriteRepository;
-        public UserController(IUserWriteRepository userWriteRepository)
+        private readonly IMediator _mediator;
+        public UserController(IMediator mediator)
         {
-            _userWriteRepository = userWriteRepository;
+            _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddUserAsync([FromBody] User user)
-        {
-            await _userWriteRepository.AddAsync(user);
-            await _userWriteRepository.SaveChangesAsync();
-            return Ok(user);
-        }
+        
     }
 }

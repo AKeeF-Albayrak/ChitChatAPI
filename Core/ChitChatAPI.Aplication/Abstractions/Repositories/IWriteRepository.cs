@@ -11,5 +11,6 @@ namespace ChitChatAPI.Aplication.Abstractions.Repositories
     {
         Task AddAsync(T entity);
         Task<int> SaveChangesAsync();
+        Task<bool> UpdateEntityAsync(T entity);
     }
 }

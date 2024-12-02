@@ -13,6 +13,7 @@ namespace ChitChatAPI.Domain.Entities
         public string Token { get; set; }
         public DateTime ExpiryDate { get; set; }
         public Guid UserId { get; set; }
+        public bool IsValid { get; set; }
         //public string DeviceInfo { get; set; }
         public string IpAddress { get; set; }
         [JsonIgnore]

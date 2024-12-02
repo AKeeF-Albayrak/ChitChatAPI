@@ -24,5 +24,11 @@ namespace ChitChatAPI.Persistence.Concretes.Repositories
         public async Task AddAsync(T entity) => await Table.AddAsync(entity);
 
         public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
+
+        public async Task<bool> UpdateEntityAsync(T entity)
+        {
+            Table.Update(entity);
+            return true;
+        }
     }
 }

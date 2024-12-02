@@ -5,6 +5,8 @@ using System.IO;
 using ChitChatAPI.Persistence.Contexts;
 using ChitChatAPI.Aplication.Abstractions.Repositories;
 using ChitChatAPI.Persistence.Concretes.Repositories;
+using ChitChatAPI.Aplication.Abstractions.Services;
+using ChitChatAPI.Persistence.Concretes.Services;
 
 public static class ServiceRegistration
 {
@@ -27,5 +29,13 @@ public static class ServiceRegistration
 
         services.AddScoped<IUserReadRepository, UserReadRepository>();
         services.AddScoped<IUserWriteRepository, UserWriteRepository>();
+
+        services.AddScoped<IRefreshTokenReadRepository, RefreshTokenReadRepository>();
+        services.AddScoped<IRefreshTokenWriteRepository, RefreshTokenWriteRepository>();
+
+        services.AddScoped<IGroupMessageReadRepository, GroupMessageReadRepository>();
+        services.AddScoped<IGroupMessageWriteRepository , GroupMessageWriteRepository>();
+
+        services.AddScoped<ITokenService, TokenService>();
     }
 }
