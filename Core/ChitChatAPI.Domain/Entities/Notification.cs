@@ -10,10 +10,9 @@ namespace ChitChatAPI.Domain.Entities
 {
     public class Notification : BaseEntity
     {
-        public Guid UserId { get; set; }
-        public Guid? MessageId { get; set; }
-        public Guid? GroupMessageId { get; set; }
-        public string Type { get; set; }
+        public required Guid UserId { get; set; }
+        public required Guid GroupMessageId { get; set; }
+        public required string Text { get; set; }
         public DateTime Timestamp { get; set; }
 
         [JsonIgnore]

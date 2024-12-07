@@ -49,7 +49,8 @@ namespace ChitChatAPI.Aplication.Features.Command.Group.CreateGroup
                 Name = request.Name,
                 Description = request.Description,
                 CreatedAt = DateTime.Now,
-                CreatedById = userId
+                CreatedById = userId,
+                Image = request.Image,
             };
 
             if (request.Image == null)

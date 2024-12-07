@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChitChatAPI.Domain.Entities.Common
+namespace ChitChatAPI.Domain.Enums
 {
-    public class BaseEntity
+    public enum TokenType
     {
-        public required Guid Id { get; set; }
+        User,
+        ForgotPassword,
+        Admin
     }
 }

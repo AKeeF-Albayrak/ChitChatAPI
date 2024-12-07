@@ -48,17 +48,13 @@ namespace ChitChatAPI.Aplication.Features.Command.User.AddUser
                 BirhDate = request.BirhDate,
                 Name = request.Name,
                 Surname = request.Surname,
-
+                Avatar = request.Avatar
             };
 
             if (request.Avatar == null)
             {
                 var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "BaseProfile.jpg");
                 user.Avatar = File.ReadAllBytes(filePath);
-            }
-            else
-            {
-                user.Avatar = request.Avatar;
             }
 
             await _userWriteRepository.AddAsync(user);

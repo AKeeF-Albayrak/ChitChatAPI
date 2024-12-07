@@ -40,9 +40,9 @@ namespace ChitChatAPI.Aplication.Features.Command.User.LoginUser
                 };
             }
 
-            var _token = await _refreshTokenReadRepository.GetTokenByUserIdAndIpAdressAsync(user.Id, request.IpAdress);
+            var _token = await _refreshTokenReadRepository.GetTokenByUserIdAndIpAdressAsync(user.Id, request.IpAdress, request.DeviceInfo);
 
-            if(_token != null && _token.ExpiryDate > DateTime.Now)
+            if(_token != null && _token.ExpiryDate > DateTime.Now && _token.IsValid)
             {
                 return new LoginUserCommandResponse()
                 {
@@ -56,7 +56,7 @@ namespace ChitChatAPI.Aplication.Features.Command.User.LoginUser
                 };
             }
 
-            if(_token.ExpiryDate < DateTime.Now)
+            if(_token != null && _token.ExpiryDate < DateTime.Now)
             {
                 _token.IsValid = false;
                 await _refreshTokenWriteRepository.UpdateEntityAsync(_token);
@@ -71,7 +71,9 @@ namespace ChitChatAPI.Aplication.Features.Command.User.LoginUser
                 ExpiryDate = DateTime.Now.AddDays(7),
                 IsValid = true,
                 UserId = user.Id,
-                IpAddress = request.IpAdress
+                IpAddress = request.IpAdress,
+                Type = Domain.Enums.TokenType.User,
+                DeviceInfo = request.DeviceInfo,
             };
 
             await _refreshTokenWriteRepository.AddAsync(token);

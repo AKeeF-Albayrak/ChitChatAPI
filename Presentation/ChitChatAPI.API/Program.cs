@@ -6,9 +6,20 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using System.Diagnostics;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecific", builder =>
+    {
+        builder.WithOrigins("http://localhost:5173")
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddHttpContextAccessor();  
 builder.Services.AddApplicationServices();
@@ -46,11 +57,22 @@ if (app.Environment.IsDevelopment())
             .WithTheme(ScalarTheme.BluePlanet)
             .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
     });
+
+    string url = "https://localhost:7227/scalar/v1";
+    Task.Run(() => Process.Start(new ProcessStartInfo
+    {
+        FileName = url,
+        UseShellExecute = true
+    }));
 }
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors("AllowSpecific");
+
+
 app.UseMiddleware<TokenMiddleware>();
 app.MapControllers();
 

@@ -11,18 +11,18 @@ namespace ChitChatAPI.Domain.Entities
 {
     public class User : BaseEntity
     {
-        public string Username { get; set; }
+        public required string Username { get; set; }
         public Role Role { get; set; }
-        public string PasswordHash { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public required string PasswordHash { get; set; }
+        public required string Name { get; set; }
+        public required string Surname { get; set; }
         public DateOnly BirhDate { get; set; }
         public bool Gender { get; set; }
-        public string Email { get; set; }
+        public required string Email { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime LastSeen { get; set; }
         public bool IsOnline { get; set; }
-        public byte[] Avatar { get; set; }
+        public required byte[] Avatar { get; set; }
         public string? VerificationCode { get; set; }
         public DateTime? VerificationCodeExpiration { get; set; }
 

@@ -22,6 +22,6 @@ namespace ChitChatAPI.Persistence.Concretes.Repositories
 
         public async Task<RefreshToken> GetTokenByTokenAsync(string token) => await Table.FirstAsync(t => t.Token == token && t.IsValid);
 
-        public async Task<RefreshToken> GetTokenByUserIdAndIpAdressAsync(Guid userId, string ipAdress) => await Table.FirstAsync(t => t.IpAddress == ipAdress && t.UserId == userId);
+        public async Task<RefreshToken> GetTokenByUserIdAndIpAdressAsync(Guid userId, string ipAdress, string deviceInfo) => await Table.FirstOrDefaultAsync(t => t.IpAddress == ipAdress && t.UserId == userId && t.DeviceInfo == deviceInfo);
     }
 }
