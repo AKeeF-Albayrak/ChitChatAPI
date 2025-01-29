@@ -5,7 +5,7 @@ using ChitChatAPI.Persistence.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Scalar.AspNetCore;
+using Microsoft.OpenApi.Models;
 using System.Diagnostics;
 using System.Text;
 
@@ -21,11 +21,41 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddHttpContextAccessor();  
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices();
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "SmartSyncAPI", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter token in the format 'Bearer {your token}'",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 builder.Configuration.AddUserSecrets<Program>();
 
@@ -44,35 +74,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference(options =>
-    {
-        options
-            .WithTitle("ChitChat API")
-            .WithTheme(ScalarTheme.BluePlanet)
-            .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
-    });
-
-    string url = "https://localhost:7227/scalar/v1";
-    Task.Run(() => Process.Start(new ProcessStartInfo
-    {
-        FileName = url,
-        UseShellExecute = true
-    }));
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.UseCors("AllowSpecific");
-
-
 app.UseMiddleware<TokenMiddleware>();
 app.MapControllers();
 

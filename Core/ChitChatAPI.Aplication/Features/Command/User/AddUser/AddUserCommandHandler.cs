@@ -41,7 +41,7 @@ namespace ChitChatAPI.Aplication.Features.Command.User.AddUser
                 Id = Guid.NewGuid(),
                 Username = request.Username,
                 Email = request.Email,
-                PasswordHash = request.PasswordHash,
+                PasswordHash = request.Password,
                 Gender = request.Gender,
                 PasswordResetAuthorized = false,
                 CreatedDate = DateTime.UtcNow,
